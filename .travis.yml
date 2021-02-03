@@ -10,14 +10,17 @@ jobs:
         - ubuntu-toolchain-r-test
         packages:
         - g++-10
+        - autotools-dev
     script:
-    - export "CXX=g++-10"; ./configure --distable-lto && make check && make install
+    - export "CXX=g++-10"; ./configure --disable-lto && make check && make install
   - addons:
       apt:
         sources:
         - ubuntu-toolchain-r-test
+        packages:
+        - autotools-dev
         update: true
     before_install:
     - wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && sudo ./llvm.sh 10
     script:
-    - export "CXX=clang++-10"; ./configure --distable-lto && make check && make install
+    - export "CXX=clang++-10"; ./configure --disable-lto && make check && make install
