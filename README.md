@@ -21,75 +21,75 @@ Example code follows.
 #include <clutils.hpp>  // libclutils header
 
 int main(int argc, char* argv[]) {
-	using std::cout;
-	using std::clog;
+  using std::cout;
+  using std::clog;
 
-	CLUtils::Opts cl; // declare an Opts object.
+  CLUtils::Opts cl; // declare an Opts object.
 
-	// declared options come in three types, called "bare", "optional" and
-	// "mandatory".
+  // declared options come in three types, called "bare", "optional" and
+  // "mandatory".
 
-	// declare a "bare" option. These options should not take an input, and
-	// so the following forms should be recognized as errors:
-	//  -hINPUT, --help=INPUT
-	cl.add_bare("-h", "--help");
+  // declare a "bare" option. These options should not take an input, and
+  // so the following forms should be recognized as errors:
+  //  -hINPUT, --help=INPUT
+  cl.add_bare("-h", "--help");
 
-	// declare a "mandatory" option. These options must take an input, which
+  // declare a "mandatory" option. These options must take an input, which
   // take the form of:
   //  -oINPUT, --output=INPUY
-	cl.add_mandatory("-o", "--output");
+  cl.add_mandatory("-o", "--output");
 
-	// declare an "optional" option. These options may or may not take an
-	// input. The capture rules for inputs will be elucidated here and in
-	// the examples that follow
-	cl.add_optional("-l", "--log");
-
-
-	// parse the arguments to the binary; a return status of "true" will
-	// indicate that parsing errors were found
-	if (cl.parse(argc, argv)) {
-
-		// write errors to std::clog...
-		cl.write_errors(clog);
-
-		// ...and exit
-		return 1;
-	}
+  // declare an "optional" option. These options may or may not take an
+  // input. The capture rules for inputs will be elucidated here and in
+  // the examples that follow
+  cl.add_optional("-l", "--log");
 
 
-	// query if an opt was present with 'have_opt'. Any of the opt names
-	// as synonyms of the opt when declared can be used (i.e. have_opt("-h")
-	// and have_opt("--help") will behave identically)
-	if (cl.have_opt("-h")) {
+  // parse the arguments to the binary; a return status of "true" will
+  // indicate that parsing errors were found
+  if (cl.parse(argc, argv)) {
 
-		// get_name: return the name of the opt passed last in argv
-		// get_pos:  return the position of the opt passed last in argv
-		//           (couting begins from 1).
-		cout << " + opt '" << cl.get_name("-h") << "' at pos "
-				 << cl.get_pos("-h") << "\n";
-	}
+    // write errors to std::clog...
+    cl.write_errors(clog);
 
-	// create a string object ('opt') to make the calls a bit cleaner
-	if (const auto opt = "-l"; cl.have_opt(opt)) {
+    // ...and exit
+    return 1;
+  }
 
-		cout << " + opt '" << cl.get_name(opt) << "' at pos "
-				 << cl.get_pos(opt);
 
-		// get_input: return a tuple of containing the input to the opt, if
-		//            present.
-		if (const auto [has_input, input] = cl.get_input(opt); has_input) {
-			cout << ", input: '" << input << "'";
-		}
-		cout << "\n";
-	}
+  // query if an opt was present with 'have_opt'. Any of the opt names
+  // as synonyms of the opt when declared can be used (i.e. have_opt("-h")
+  // and have_opt("--help") will behave identically)
+  if (cl.have_opt("-h")) {
 
-	// as above for the optional "-l" opt but the input is guaranteed to
-	// be present for mandatory opt "-o".
-	if (const auto opt = "-o"; cl.have_opt(opt)) {
-		cout << " + opt '" << cl.get_name(opt) << "' at pos "
-				 << cl.get_pos(opt) << ", input: '"
-				 << std::get<1>(cl.get_input(opt)) << "'\n";
-	}
+    // get_name: return the name of the opt passed last in argv
+    // get_pos:  return the position of the opt passed last in argv
+    //           (couting begins from 1).
+    cout << " + opt '" << cl.get_name("-h") << "' at pos "
+         << cl.get_pos("-h") << "\n";
+  }
+
+  // create a string object ('opt') to make the calls a bit cleaner
+  if (const auto opt = "-l"; cl.have_opt(opt)) {
+
+    cout << " + opt '" << cl.get_name(opt) << "' at pos "
+         << cl.get_pos(opt);
+
+    // get_input: return a tuple of containing the input to the opt, if
+    //            present.
+    if (const auto [has_input, input] = cl.get_input(opt); has_input) {
+      cout << ", input: '" << input << "'";
+    }
+    cout << "\n";
+  }
+
+  // as above for the optional "-l" opt but the input is guaranteed to
+  // be present for mandatory opt "-o".
+  if (const auto opt = "-o"; cl.have_opt(opt)) {
+    cout << " + opt '" << cl.get_name(opt) << "' at pos "
+         << cl.get_pos(opt) << ", input: '"
+         << std::get<1>(cl.get_input(opt)) << "'\n";
+  }
 
 }
 ```

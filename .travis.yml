@@ -4,24 +4,24 @@ dist: bionic
 sudo: required
 
 matrix:
-	include:
-		- addons:
-				apt:
-					sources:
-						- ubuntu-toolchain-r-test
-					packages:
-						- g++-10
-			env:
-				- MATRIX_EVAL="CXX=g++-10"
-		- addons:
-				apt:
-					sources:
-						- ubuntu-toolchain-r-test
-						- llvm-toolchain-bionic-10
-			env:
-				- MATRIX_EVAL="CXX=clang++-10"
+  include:
+    - addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-10
+        env:
+          - MATRIX_EVAL="CXX=g++-10"
+    - addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-bionic-10
+        env:
+          - MATRIX_EVAL="CXX=clang++-10"
 
 before_install:
-	- eval "${MATRIX_EVAL}"
+  - eval "${MATRIX_EVAL}"
 script:
-	- ./configure --distable-lto && make check && make install
+  - ./configure --distable-lto && make check && make install
