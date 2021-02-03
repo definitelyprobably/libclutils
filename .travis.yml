@@ -1,6 +1,8 @@
 language: cpp
 os: linux
-dist: focal
+dist:
+  - bionic
+  - focal
 
 jobs:
   include:
@@ -18,9 +20,10 @@ jobs:
         sources:
         - ubuntu-toolchain-r-test
         packages:
+        - g++-10
         - autotools-dev
         update: true
     before_install:
-    - wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && sudo ./llvm.sh 11
+    - wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && sudo ./llvm.sh 10
     script:
-    - export "CXX=clang++-11"; ./configure --disable-lto && make check && sudo make install
+    - export "CXX=clang++-10"; ./configure --disable-lto && make check && sudo make install
