@@ -1,0 +1,10 @@
+TODO
+
+[ ] parsing, then changing the flag markers and re-parsing: will this
+    work? make it work.
+[ ] enable use of boost::lexical_cast and/or libfmt when available (with
+    cpp macros).
+[ ] when accepting unrecognized flags, then recognize "-hX" (for a bare
+    flag "-h") as an unrecognized flag "-X" at pos N, subpos 2.
+[ ] related to above, add a subpos data member to BasicArg.
+[ ] universal to collect unknown args AND flags
