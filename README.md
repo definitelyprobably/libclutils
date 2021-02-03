@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/definitelyprobably/libclutils.svg?branch=master)](https://travis-ci.com/definitelyprobably/libclutils)
 
-C++ library for parsing command-line arguments.
+C++20 library for parsing command-line arguments.
 
 ## Building
 
