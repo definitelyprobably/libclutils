@@ -1,27 +1,23 @@
 language: cpp
 os: linux
 dist: bionic
-sudo: required
 
-matrix:
+jobs:
   include:
-    - addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-10
-        env:
-          - MATRIX_EVAL="CXX=g++-10"
-    - addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-bionic-10
-        env:
-          - MATRIX_EVAL="CXX=clang++-10"
-
-before_install:
-  - eval "${MATRIX_EVAL}"
-script:
-  - ./configure --distable-lto && make check && make install
+  - addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-10
+    script:
+    - export "CXX=g++-10"; ./configure --distable-lto && make check && make install
+  - addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        update: true
+    before_install:
+    - wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && sudo ./llvm.sh 10
+    script:
+    - export "CXX=clang++-10"; ./configure --distable-lto && make check && make install
